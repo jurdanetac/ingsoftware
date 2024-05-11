@@ -1,0 +1,1 @@
+sudo docker run -it -v ./:/home/node/frontend_ingsoftware -w /home/node/ -p 5173:5173 node:16.17.0-alpine3.16 /bin/sh

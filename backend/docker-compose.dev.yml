@@ -4,7 +4,7 @@ services:
     container_name: mariadb
     environment:
       - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_DATABASE=ingsoftware
+      - MYSQL_DATABASE=camicandy
     volumes:
       - ./mysql:/var/lib/mysql
   phpmyadmin:

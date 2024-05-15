@@ -1,0 +1,2 @@
+sudo docker run -it -v ./:/home/node/backend_ingsoftware -w /home/node/ -p 3000:3000 node:16.17.0-alpine3.16 /b
+in/sh

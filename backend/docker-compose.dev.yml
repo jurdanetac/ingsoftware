@@ -18,6 +18,7 @@ services:
       - PMA_HOST=mariadb
   node:
     image: "node:16.17.0-alpine3.16"
+    container_name: backend_ingsoftware
     user: "node"
     working_dir: /home/node/backend_ingsoftware
     environment:

@@ -2,14 +2,14 @@ version: "2"
 services:
   node:
     image: "node:16.17.0-alpine3.16"
+    container_name: frontend_ingsoftware
     user: "node"
     working_dir: /home/node/frontend_ingsoftware
     environment:
       - NODE_ENV=production
     volumes:
       - ./:/home/node/frontend_ingsoftware
-    expose:
-      - "5173"
     ports: # use if it is necessary to expose the container to the host machine
-      - "5173:5173"
+      - "5173:5173" # dev
+      - "4173:4173" # preview build
     command: "npm run dev"

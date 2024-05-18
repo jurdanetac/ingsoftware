@@ -129,5 +129,9 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
-mysql/
+# mockups
 pagina_de_ventas.zip
+
+# backend data
+mysql/
+postgres/

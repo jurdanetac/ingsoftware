@@ -2,6 +2,7 @@ const createError = require("http-errors");
 const express = require("express");
 const logger = require("morgan");
 
+const infoRouter = require("./routes/info");
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
 
@@ -12,6 +13,7 @@ app.use(express.json());
 
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
+app.use("/info", infoRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -26,7 +28,7 @@ app.use(function (err, req, res, next) {
 
   // render the error page
   res.json({
-    error: err.message
+    error: err.message,
   });
 });
 

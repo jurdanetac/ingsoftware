@@ -37,8 +37,12 @@ services:
     user: "node"
     working_dir: /home/node/backend_ingsoftware
     environment:
-      - NODE_ENV=production
+      - NODE_ENV=development
       - DEBUG=backend_ingsoftware:*
+      - PORT=3000
+      - NODE_VERSION=16.17.0
+      # locally use mariadb container not postgresql
+      - DATABASE_URL=mariadb://root:root@mariadb:3306/camicandy
     volumes:
       - ./:/home/node/backend_ingsoftware
     expose:

@@ -6,7 +6,7 @@ services:
     user: "node"
     working_dir: /home/node/frontend_ingsoftware
     # environment:
-      # - NODE_ENV=production
+    # - NODE_ENV=production
     volumes:
       - ./:/home/node/frontend_ingsoftware
     ports: # use if it is necessary to expose the container to the host machine

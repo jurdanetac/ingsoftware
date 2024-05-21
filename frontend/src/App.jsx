@@ -1,7 +1,7 @@
 import "./App.css";
 import { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import axios from "axios";
+import axios from "redaxios";
 
 const App = () => {
   const [username, setUsername] = useState("");

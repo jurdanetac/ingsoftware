@@ -1,6 +1,7 @@
 import "./App.css";
 import { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import axios from "axios";
 
 const App = () => {
   const [username, setUsername] = useState("");
@@ -9,6 +10,13 @@ const App = () => {
 
   const login = () => {
     console.log(`username: ${username}, password: ${password}`);
+
+    // test to see if front connects with back
+    axios
+      .get("https://backend-ingsoftware.onrender.com/api/info")
+      .then((res) => {
+        console.log(res.data);
+      });
   };
 
   return (

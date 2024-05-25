@@ -1,5 +1,12 @@
 const User = require("./User");
+const Session = require("./Session");
 
-User.sync();
+User.hasMany(Session, {
+  foreignKey: "usuarios_id",
+  onDelete: "CASCADE",
+});
 
-module.exports = User;
+module.exports = {
+  User,
+  Session,
+};

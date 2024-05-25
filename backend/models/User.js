@@ -12,11 +12,11 @@ User.init(
       autoIncrement: true,
     },
     cedula: {
-      type: DataTypes.TEXT,
+      type: DataTypes.STRING(12),
       allowNull: false,
     },
     nombre: {
-      type: DataTypes.TEXT,
+      type: DataTypes.STRING(45),
       allowNull: false,
     },
     rol: {
@@ -24,8 +24,8 @@ User.init(
       allowNull: false,
     },
     hashDeContrasena: {
-      type: DataTypes.TEXT,
-      length: 60,
+      type: DataTypes.STRING(60),
+      allowNull: false,
     },
     preguntaSeguridad: {
       type: DataTypes.ENUM(
@@ -37,8 +37,7 @@ User.init(
       allowNull: false,
     },
     respuestaSeguridad: {
-      type: DataTypes.TEXT,
-      length: 60,
+      type: DataTypes.STRING(60),
       allowNull: false,
     },
   },

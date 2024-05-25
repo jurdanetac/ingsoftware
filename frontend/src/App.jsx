@@ -1,66 +1,28 @@
 import "./App.css";
 import { useState } from "react";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
+import Login from "./components/Login";
 import axios from "redaxios";
 
 const App = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
+  const [session, setSession] = useState(null);
 
-  const login = () => {
-    console.log(`username: ${username}, password: ${password}`);
+  // if user is not logged in, show login page
+  if (!session) {
+    return <Login setSession={setSession} />;
+  }
 
-    // test to see if front connects with back
-    axios
-      .get("https://backend-ingsoftware.onrender.com/api/info")
-      .then((res) => {
-        console.log(res.data);
-      });
+  const logout = () => {
+    // delete user from state
+    setSession(null);
+    // ask server to delete user session
+    // axios.delete(`/api/logout/${session.id}`);
   };
 
   return (
-    <>
-      <div className="background">
-        <div className="shape"></div>
-      </div>
-      <form onSubmit={(event) => event.preventDefault()}>
-        <h3>Bienvenido</h3>
-
-        <label htmlFor="username">Cédula</label>
-        <input
-          type="text"
-          value={username}
-          onChange={(event) => setUsername(event.target.value)}
-          placeholder="Cédula"
-          id="username"
-        />
-
-        <label htmlFor="password">Contraseña</label>
-        <div className="password-container">
-          <input
-            type={showPassword ? "text" : "password"}
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
-            placeholder="Contraseña"
-            id="password"
-          />
-          <div
-            className="eye-icon"
-            onClick={() => setShowPassword(!showPassword)}
-          >
-            {showPassword ? <FaEyeSlash /> : <FaEye />}
-          </div>
-        </div>
-
-        <button type="submit" onClick={login}>
-          Ingresar
-        </button>
-        <a href="#" className="forgot-password">
-          ¿Olvidó su contraseña?
-        </a>
-      </form>
-    </>
+    <div className="App">
+      <h1>Welcome {session.user}</h1>
+      <button onClick={() => setSession(null)}>Logout</button>
+    </div>
   );
 };
 

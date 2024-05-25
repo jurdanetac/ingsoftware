@@ -1,27 +1,49 @@
 import "./App.css";
 import { useState } from "react";
 import Login from "./components/Login";
+import Home from "./components/Home";
 import axios from "redaxios";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Link,
+  Navigate,
+} from "react-router-dom";
 
 const App = () => {
   const [session, setSession] = useState(null);
 
-  // if user is not logged in, show login page
-  if (!session) {
-    return <Login setSession={setSession} />;
-  }
-
   const logout = () => {
-    // delete user from state
     setSession(null);
-    // ask server to delete user session
-    // axios.delete(`/api/logout/${session.id}`);
   };
 
   return (
     <div className="App">
-      <h1>Welcome {session.user}</h1>
-      <button onClick={() => setSession(null)}>Logout</button>
+      <Router>
+        <Routes>
+          <Route
+            path="/ingsoftware/login/"
+            element={
+              session ? (
+                <Navigate replace to="/ingsoftware/" />
+              ) : (
+                <Login setSession={setSession} />
+              )
+            }
+          />
+          <Route
+            path="/ingsoftware/"
+            element={
+              session ? (
+                <Home user={"Test"} logout={logout} />
+              ) : (
+                <Navigate replace to="/ingsoftware/login/" />
+              )
+            }
+          />
+        </Routes>
+      </Router>
     </div>
   );
 };

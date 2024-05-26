@@ -7,11 +7,21 @@ const options =
   NODE_ENV === "production"
     ? {
         dialect: "postgres",
-        keepAlive: true,
       }
     : {
         dialect: "mariadb",
       };
+
+if (NODE_ENV === "production") {
+  options.dialectOptions = {
+    ssl: {
+      require: true,
+      rejectUnauthorized: false,
+    },
+    keepAlive: true,
+    multipleStatements: true,
+  };
+}
 
 const sequelize = new Sequelize(DATABASE_URL, options);
 

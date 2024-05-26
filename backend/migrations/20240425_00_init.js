@@ -20,11 +20,11 @@ module.exports = {
         type: DataTypes.ENUM("administrador", "empleado"),
         allowNull: false,
       },
-      hashDeContrasena: {
+      hash_de_contrasena: {
         type: DataTypes.STRING(60),
         allowNull: false,
       },
-      preguntaSeguridad: {
+      pregunta_seguridad: {
         type: DataTypes.ENUM(
           "¿Cuándo es tu cumpleaños?",
           "¿A qué secundaria fuiste?",
@@ -33,22 +33,35 @@ module.exports = {
         ),
         allowNull: false,
       },
-      respuestaSeguridad: {
+      respuesta_seguridad: {
         type: DataTypes.STRING(60),
         allowNull: false,
       },
     });
 
-    /*
-    await queryInterface.addColumn('notes', 'user_id', {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: { model: 'users', key: 'id' },
-    })
-    */
+    await queryInterface.createTable("sesiones", {
+      id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+      },
+      token: {
+        type: DataTypes.TEXT,
+        allowNull: false,
+      },
+      valido_hasta: {
+        type: DataTypes.TIME,
+        allowNull: false,
+      },
+      usuarios_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: { model: "usuarios", key: "id" },
+      },
+    });
   },
   down: async ({ context: queryInterface }) => {
+    await queryInterface.dropTable("sesiones");
     await queryInterface.dropTable("usuarios");
-    // await queryInterface.dropTable('sesiones')
   },
 };

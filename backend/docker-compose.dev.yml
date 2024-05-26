@@ -50,3 +50,6 @@ services:
     ports: # use if it is necessary to expose the container to the host machine
       - "3000:3000"
     command: "npm run dev"
+    depends_on:
+      - mariadb
+      - postgresql

@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "nodemon ./index.js",
-    "start": "node ./index.js"
+    "start": "node ./index.js",
+    "migration:down": "node util/rollback.js"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",

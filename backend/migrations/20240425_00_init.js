@@ -59,6 +59,48 @@ module.exports = {
         references: { model: "usuarios", key: "id" },
       },
     });
+
+    await queryInterface.bulkInsert("usuarios", [
+      {
+        id: 1,
+        cedula: "29903089",
+        nombre: "juan",
+        rol: "administrador",
+        hash_de_contrasena:
+          "$2b$10$mVwVDKUIArIjnW9zpNSj5.NUzkjBGNFTKXEVpM9bGHZ/dbSiVhWa2",
+        pregunta_seguridad: "¿Cuál es tu postre favorito?",
+        respuesta_seguridad:
+          "$2b$10$mVwVDKUIArIjnW9zpNSj5.NUzkjBGNFTKXEVpM9bGHZ/dbSiVhWa2",
+      },
+      {
+        id: 2,
+        cedula: "29877987",
+        nombre: "samuel",
+        rol: "empleado",
+        hash_de_contrasena:
+          "$2b$10$V1rms6bjuDgK2wMStrN53uOheLkNQXXEd4ZCUP5e2CpAbC8jzLKFi",
+        pregunta_seguridad: "¿Cuál es tu postre favorito?",
+        respuesta_seguridad:
+          "$2b$10$V1rms6bjuDgK2wMStrN53uOheLkNQXXEd4ZCUP5e2CpAbC8jzLKFi",
+      },
+    ]);
+
+    await queryInterface.bulkInsert("sesiones", [
+      {
+        id: 1,
+        token:
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Mjk5MDMwODksImlkIjoxLCJpYXQiOjE3MTQ4NDA4MDh9.yF5GZgfu6yjs26eO71L9HWaRbBnnge1tsrkav3nAeC4",
+        valido_hasta: "2026-01-01 03:59:59",
+        usuarios_id: 1,
+      },
+      {
+        id: 2,
+        token:
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Mjk4Nzc5ODcsImlkIjoyLCJpYXQiOjE3MTQ4NDA5MDd9.6MWQmUdL2QDTU0q6RtjbhUpu5wuOp-QB9dD1qxoId38",
+        valido_hasta: "2026-01-01 03:59:59",
+        usuarios_id: 2,
+      },
+    ]);
   },
   down: async ({ context: queryInterface }) => {
     await queryInterface.dropTable("sesiones");

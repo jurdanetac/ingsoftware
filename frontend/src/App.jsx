@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import Login from "./components/Login";
 import Home from "./components/Home";
 import {
-  BrowserRouter as Router,
+  HashRouter as Router,
   Routes,
   Route,
   Link,
@@ -27,25 +27,25 @@ const App = () => {
 
   return (
     <div className="App">
-      <Router>
+      <Router basename="/">
         <Routes>
           <Route
-            path="/ingsoftware/login/"
+            path="/login/"
             element={
               session ? (
-                <Navigate replace to="/ingsoftware/" />
+                <Navigate replace to="/" />
               ) : (
                 <Login setSession={setSession} />
               )
             }
           />
           <Route
-            path="/ingsoftware/"
+            path="/"
             element={
               session ? (
                 <Home user={"Test"} logout={logout} />
               ) : (
-                <Navigate replace to="/ingsoftware/login/" />
+                <Navigate replace to="/login/" />
               )
             }
           />

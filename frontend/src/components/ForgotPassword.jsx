@@ -1,24 +1,15 @@
 import React, { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import axios from "redaxios";
 import { Link } from "react-router-dom";
 import Card from "./Card";
 
-const Login = ({ setSession }) => {
+const ForgotPassword = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
   const login = () => {
     console.log(`username: ${username}, password: ${password}`);
-
-    // test to see if front connects with back
-    axios
-      .get("https://backend-ingsoftware.onrender.com/api/info")
-      .then((res) => {
-        console.log(res.data);
-        setSession(res.data);
-      });
   };
 
   const formStyle = {
@@ -73,4 +64,4 @@ const Login = ({ setSession }) => {
   return <Card form={form} />;
 };
 
-export default Login;
+export default ForgotPassword;

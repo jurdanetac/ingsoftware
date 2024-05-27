@@ -1,12 +1,12 @@
 import "./App.css";
 import { useState, useEffect } from "react";
-import Login from "./components/Login";
 import Home from "./components/Home";
+import Login from "./components/Login";
+import ForgotPassword from "./components/ForgotPassword";
 import {
   HashRouter as Router,
   Routes,
   Route,
-  Link,
   Navigate,
 } from "react-router-dom";
 import apiService from "./services/api.js";
@@ -49,6 +49,11 @@ const App = () => {
               )
             }
           />
+          <Route
+            path="/forgot-password/"
+            element={session ? <Navigate replace to="/" /> : <ForgotPassword />}
+          />
+          <Route path="*" element={<Navigate replace to="/" />} />
         </Routes>
       </Router>
     </div>

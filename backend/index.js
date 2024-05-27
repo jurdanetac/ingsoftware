@@ -10,11 +10,13 @@ const { connectToDatabase } = require("./util/db");
 const userRouter = require("./controllers/users");
 const indexRouter = require("./controllers/index");
 const infoRouter = require("./controllers/info");
+const pingRouter = require("./controllers/ping");
 
 app.use(logger("dev"));
 app.use(cors());
 app.use(express.json());
 
+app.use("/api/ping", pingRouter);
 app.use("/api/users", userRouter);
 app.use("/api/info", infoRouter);
 app.use("/", indexRouter);

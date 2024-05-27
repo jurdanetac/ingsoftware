@@ -1,8 +1,7 @@
 import "./App.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Login from "./components/Login";
 import Home from "./components/Home";
-import axios from "redaxios";
 import {
   BrowserRouter as Router,
   Routes,
@@ -10,9 +9,17 @@ import {
   Link,
   Navigate,
 } from "react-router-dom";
+import apiService from "./services/api.js";
 
 const App = () => {
   const [session, setSession] = useState(null);
+
+  // wait for the server to wake up
+  useEffect(() => {
+    apiService.ping().then((res) => {
+      console.log(res);
+    });
+  }, []);
 
   const logout = () => {
     setSession(null);

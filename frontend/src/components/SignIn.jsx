@@ -40,14 +40,26 @@ const defaultTheme = createTheme({
   },
 });
 
-export default function SignIn() {
+export default function SignIn({ setSession }) {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
+    const username = data.get("username");
+    const password = data.get("password");
     console.log("logging in with:", {
-      username: data.get("username"),
-      password: data.get("password"),
+      username,
+      password,
     });
+
+    apiService
+      .login(username, password)
+      .then((response) => {
+        console.log("login response:", response);
+        setSession(response);
+      })
+      .catch((error) => {
+        console.error("login error:", error);
+      });
   };
 
   return (

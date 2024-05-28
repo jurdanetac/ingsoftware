@@ -14,12 +14,9 @@ const App = () => {
 
   /*
    * sesssion = {
-   *  id,
    *  token: token,
-   *  user: {
-   *   id: 1,
-   *   username: "user"
-   *   }
+   *  username: "user",
+   *  name: "name",
    * }
    * */
 
@@ -31,7 +28,13 @@ const App = () => {
   }, []);
 
   return (
-    <div className="App">{session ? <h1>Bienvenido</h1> : <SignIn />}</div>
+    <div className="App">
+      {session ? (
+        <h1>Bienvenido {session.name}</h1>
+      ) : (
+        <SignIn setSession={setSession} />
+      )}
+    </div>
   );
 };
 

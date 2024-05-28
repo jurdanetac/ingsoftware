@@ -60,6 +60,7 @@ module.exports = {
       },
     });
 
+    /*
     await queryInterface.bulkInsert("usuarios", [
       {
         id: 1,
@@ -101,6 +102,7 @@ module.exports = {
         usuarios_id: 2,
       },
     ]);
+    */
   },
   down: async ({ context: queryInterface }) => {
     await queryInterface.dropTable("sesiones");

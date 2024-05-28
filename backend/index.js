@@ -6,37 +6,25 @@ const logger = require("morgan");
 
 const { PORT } = require("./util/config");
 const { connectToDatabase } = require("./util/db");
+const { errorHandler, unknownEndpoint } = require("./util/middleware");
 
-const userRouter = require("./controllers/users");
-const indexRouter = require("./controllers/index");
-const infoRouter = require("./controllers/info");
 const pingRouter = require("./controllers/ping");
+const infoRouter = require("./controllers/info");
+const userRouter = require("./controllers/users");
+const loginRouter = require("./controllers/login");
+const indexRouter = require("./controllers/index");
 
 app.use(logger("dev"));
 app.use(cors());
 app.use(express.json());
 
 app.use("/api/ping", pingRouter);
-app.use("/api/users", userRouter);
 app.use("/api/info", infoRouter);
+app.use("/api/login", loginRouter);
+app.use("/api/users", userRouter);
 app.use("/", indexRouter);
-
-// catch 404 and forward to error handler
-app.use(function (req, res, next) {
-  next(createError(404));
-});
-
-// error handler
-app.use(function (err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get("env") === "development" ? err : {};
-
-  // render the error page
-  res.json({
-    error: err.message,
-  });
-});
+app.use(unknownEndpoint);
+app.use(errorHandler);
 
 const start = async () => {
   await connectToDatabase();

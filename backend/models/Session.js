@@ -28,4 +28,4 @@ Session.init(
   },
 );
 
-module.exports = User;
+module.exports = Session;

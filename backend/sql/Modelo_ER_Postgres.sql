@@ -118,10 +118,29 @@ CREATE TRIGGER "actualizar_stock_monto" AFTER INSERT ON "public"."transacciones_
 
 DELIMITER ;
 
+DROP TABLE IF EXISTS "usuarios";
+CREATE TABLE "public"."usuarios" (
+    "id" bigint NOT NULL,
+    "cedula" character varying(12) NOT NULL,
+    "nombre" character varying(45) NOT NULL,
+    "rol" rol NOT NULL,
+    "hash_de_contrasena" character varying(60) NOT NULL,
+    "pregunta_seguridad" pregunta_seguridad NOT NULL,
+    "respuesta_seguridad" character varying(60) NOT NULL,
+    CONSTRAINT "usuarios_cedula" UNIQUE ("cedula"),
+    CONSTRAINT "usuarios_id" PRIMARY KEY ("id")
+) WITH (oids = false);
+
+INSERT INTO "usuarios" ("id", "cedula", "nombre", "rol", "hash_de_contrasena", "pregunta_seguridad", "respuesta_seguridad") VALUES
+(1,	'29903089',	'juan',	'administrador',	'$2b$10$mVwVDKUIArIjnW9zpNSj5.NUzkjBGNFTKXEVpM9bGHZ/dbSiVhWa2',	'¿Cuál es tu postre favorito?',	'$2b$10$mVwVDKUIArIjnW9zpNSj5.NUzkjBGNFTKXEVpM9bGHZ/dbSiVhWa2'),
+(2,	'29877987',	'samuel',	'empleado',	'$2b$10$V1rms6bjuDgK2wMStrN53uOheLkNQXXEd4ZCUP5e2CpAbC8jzLKFi',	'¿Cuál es tu postre favorito?',	'$2b$10$V1rms6bjuDgK2wMStrN53uOheLkNQXXEd4ZCUP5e2CpAbC8jzLKFi');
+
+ALTER TABLE ONLY "public"."sesiones" ADD CONSTRAINT "sesiones_usuarios_id_fkey" FOREIGN KEY (usuarios_id) REFERENCES usuarios(id) ON DELETE CASCADE NOT DEFERRABLE;
+
 ALTER TABLE ONLY "public"."transacciones" ADD CONSTRAINT "fk_transacciones_clientes1" FOREIGN KEY (clientes_id) REFERENCES clientes(id) NOT DEFERRABLE;
 ALTER TABLE ONLY "public"."transacciones" ADD CONSTRAINT "fk_transacciones_proveedores1" FOREIGN KEY (proveedores_id) REFERENCES proveedores(id) NOT DEFERRABLE;
 
 ALTER TABLE ONLY "public"."transacciones_tiene_productos" ADD CONSTRAINT "fk_transacciones_has_productos_productos1" FOREIGN KEY (productos_id) REFERENCES productos(id) NOT DEFERRABLE;
 ALTER TABLE ONLY "public"."transacciones_tiene_productos" ADD CONSTRAINT "fk_transacciones_has_productos_transacciones1" FOREIGN KEY (transacciones_id) REFERENCES transacciones(id) NOT DEFERRABLE;
 
--- 2024-05-18 21:34:43.169599+00
+-- 2024-05-28 10:16:23.848602+00

@@ -1,18 +1,27 @@
-import "./App.css";
+import "@fontsource/roboto/300.css";
+import "@fontsource/roboto/400.css";
+import "@fontsource/roboto/500.css";
+import "@fontsource/roboto/700.css";
+
+import SignIn from "./components/SignIn";
+
 import { useState, useEffect } from "react";
-import Home from "./components/Home";
-import Login from "./components/Login";
-import ForgotPassword from "./components/ForgotPassword";
-import {
-  HashRouter as Router,
-  Routes,
-  Route,
-  Navigate,
-} from "react-router-dom";
 import apiService from "./services/api.js";
 
 const App = () => {
+  // wether user is logged in or not
   const [session, setSession] = useState(null);
+
+  /*
+   * sesssion = {
+   *  id,
+   *  token: token,
+   *  user: {
+   *   id: 1,
+   *   username: "user"
+   *   }
+   * }
+   * */
 
   // wait for the server to wake up
   useEffect(() => {
@@ -21,42 +30,8 @@ const App = () => {
     });
   }, []);
 
-  const logout = () => {
-    setSession(null);
-  };
-
   return (
-    <div className="App">
-      <Router basename="/">
-        <Routes>
-          <Route
-            path="/login/"
-            element={
-              session ? (
-                <Navigate replace to="/" />
-              ) : (
-                <Login setSession={setSession} />
-              )
-            }
-          />
-          <Route
-            path="/"
-            element={
-              session ? (
-                <Home user={"Test"} logout={logout} />
-              ) : (
-                <Navigate replace to="/login/" />
-              )
-            }
-          />
-          <Route
-            path="/forgot-password/"
-            element={session ? <Navigate replace to="/" /> : <ForgotPassword />}
-          />
-          <Route path="*" element={<Navigate replace to="/" />} />
-        </Routes>
-      </Router>
-    </div>
+    <div className="App">{session ? <h1>Bienvenido</h1> : <SignIn />}</div>
   );
 };
 

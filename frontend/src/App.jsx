@@ -4,6 +4,7 @@ import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 
 import SignIn from "./components/SignIn";
+import Dashboard from "./components/Dashboard";
 
 import { useState, useEffect } from "react";
 import apiService from "./services/api.js";
@@ -29,11 +30,7 @@ const App = () => {
 
   return (
     <div className="App">
-      {session ? (
-        <h1>Bienvenido {session.name}</h1>
-      ) : (
-        <SignIn setSession={setSession} />
-      )}
+      {session ? <Dashboard /> : <SignIn setSession={setSession} />}
     </div>
   );
 };

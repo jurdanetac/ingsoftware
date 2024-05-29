@@ -13,6 +13,10 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
+import Alert from "@mui/material/Alert";
+
+import { useState, useEffect } from "react";
+
 import apiService from "../services/api.js";
 
 function Copyright(props) {
@@ -59,12 +63,22 @@ export default function SignIn({ setSession }) {
       })
       .catch((error) => {
         console.error("login error:", error);
+        setNotification("Error al iniciar sesión");
       });
   };
+
+  const [notification, setNotification] = useState(null);
+  // remove notification after 5 seconds
+  useEffect(() => {
+    setTimeout(() => {
+      setNotification(null);
+    }, 5000);
+  }, [notification]);
 
   return (
     <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="xs">
+        {notification ? <Alert severity="error">{notification}</Alert> : null}
         <CssBaseline />
         <Box
           sx={{

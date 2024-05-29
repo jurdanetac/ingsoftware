@@ -3,6 +3,14 @@ import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 
+// import react router
+import {
+  HashRouter as Router,
+  Route,
+  Routes,
+  Navigate,
+} from "react-router-dom";
+
 import SignIn from "./components/SignIn";
 import Dashboard from "./components/Dashboard";
 
@@ -28,11 +36,30 @@ const App = () => {
     });
   }, []);
 
-  return (
-    <div className="App">
-      {session ? <Dashboard /> : <SignIn setSession={setSession} />}
-    </div>
+  // react router, url handling
+  const routes = (
+    <Router>
+      <Routes>
+        <Route
+          path="/"
+          element={session ? <Dashboard /> : <Navigate replace to="/login" />}
+        />
+        <Route
+          path="/login"
+          element={
+            session ? (
+              <Navigate replace to="/" />
+            ) : (
+              <SignIn setSession={setSession} />
+            )
+          }
+        />
+        <Route path="*" element={<Navigate replace to="/" />} />
+      </Routes>
+    </Router>
   );
+
+  return <div className="App">{routes}</div>;
 };
 
 export default App;

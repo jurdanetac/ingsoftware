@@ -3,7 +3,7 @@ import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 
-// import react router
+import { useState, useEffect } from "react";
 import {
   HashRouter as Router,
   Route,
@@ -14,11 +14,10 @@ import {
 import SignIn from "./components/SignIn";
 import Dashboard from "./components/Dashboard";
 
-import { useState, useEffect } from "react";
 import apiService from "./services/api.js";
 
 const App = () => {
-  // wether user is logged in or not
+  // whether user is logged in or not
   const [session, setSession] = useState(null);
 
   /*
@@ -29,7 +28,7 @@ const App = () => {
    * }
    * */
 
-  // wait for the server to wake up
+  // ping the server to wake up
   useEffect(() => {
     apiService.ping().then((res) => {
       console.log(res);

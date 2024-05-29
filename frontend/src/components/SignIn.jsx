@@ -92,7 +92,7 @@ export default function SignIn({ setSession }) {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign in
+            Inicio de Sesión
           </Typography>
           <Box
             component="form"
@@ -115,7 +115,7 @@ export default function SignIn({ setSession }) {
               required
               fullWidth
               name="password"
-              label="Password"
+              label="Contraseña"
               type="password"
               id="password"
               autoComplete="current-password"
@@ -126,12 +126,12 @@ export default function SignIn({ setSession }) {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Sign In
+              Iniciar Sesión
             </Button>
             <Grid container direction="column" alignItems="center">
               <Grid item xs>
                 <Link href="#" variant="body2">
-                  Forgot password?
+                  ¿Olvidó su contraseña?
                 </Link>
               </Grid>
             </Grid>

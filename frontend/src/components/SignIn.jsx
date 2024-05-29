@@ -28,11 +28,36 @@ const defaultTheme = createTheme({
 });
 
 export default function SignIn({ setSession }) {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [notification, setNotification] = useState(null);
+
+  // remove notification after 5 seconds
+  useEffect(() => {
+    setTimeout(() => {
+      setNotification(null);
+    }, 5000);
+  }, [notification]);
+
+  const setCedula = (cedula) => {
+    // only allow 9 characters
+    if (cedula.length > 9) return;
+
+    // only allow numbers
+    if (/^[0-9]+$/.test(cedula) || cedula === "") {
+      setUsername(cedula);
+    }
+  };
+
   const handleSubmit = (event) => {
+    // prevent default form submission, page reload
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    const username = data.get("username");
-    const password = data.get("password");
+
+    if (username === "" || password === "") {
+      setNotification("Por favor, llene todos los campos");
+      return;
+    }
+
     console.log("logging in with:", {
       username,
       password,
@@ -49,14 +74,6 @@ export default function SignIn({ setSession }) {
         setNotification("Error al iniciar sesión");
       });
   };
-
-  const [notification, setNotification] = useState(null);
-  // remove notification after 5 seconds
-  useEffect(() => {
-    setTimeout(() => {
-      setNotification(null);
-    }, 5000);
-  }, [notification]);
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -89,6 +106,8 @@ export default function SignIn({ setSession }) {
               fullWidth
               id="username"
               label="Cédula"
+              value={username}
+              onChange={(event) => setCedula(event.target.value)}
               name="username"
               autoComplete="username"
               autoFocus
@@ -99,6 +118,8 @@ export default function SignIn({ setSession }) {
               fullWidth
               name="password"
               label="Contraseña"
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
               type="password"
               id="password"
               autoComplete="current-password"

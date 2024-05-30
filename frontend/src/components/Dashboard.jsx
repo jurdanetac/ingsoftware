@@ -16,6 +16,7 @@ import Paper from "@mui/material/Paper";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import NotificationsIcon from "@mui/icons-material/Notifications";
+import LogoutIcon from "@mui/icons-material/Logout";
 import { mainListItems, secondaryListItems } from "./listItems";
 
 import Chart from "./Chart";
@@ -74,7 +75,7 @@ const defaultTheme = createTheme({
   palette: { mode: "dark" },
 });
 
-export default function Dashboard() {
+export default function Dashboard({ session, logout }) {
   const [open, setOpen] = React.useState(true);
   const toggleDrawer = () => {
     setOpen(!open);
@@ -111,6 +112,11 @@ export default function Dashboard() {
             >
               Dashboard
             </Typography>
+            <IconButton color="inherit">
+              <Badge color="secondary">
+                <LogoutIcon onClick={logout} />
+              </Badge>
+            </IconButton>
             <IconButton color="inherit">
               <Badge badgeContent={4} color="secondary">
                 <NotificationsIcon />

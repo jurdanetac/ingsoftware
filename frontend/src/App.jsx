@@ -28,6 +28,11 @@ const App = () => {
    * }
    * */
 
+  const logout = () => {
+    window.localStorage.removeItem("session");
+    setSession(null);
+  };
+
   // ping the server to wake up
   useEffect(() => {
     apiService
@@ -58,7 +63,7 @@ const App = () => {
 
       if (expired) {
         console.log("removing expired session from local storage");
-        window.localStorage.removeItem("session");
+        logout();
         console.log("session removed from local storage");
       } else {
         console.log("loading session from local storage");
@@ -75,7 +80,13 @@ const App = () => {
       <Routes>
         <Route
           path="/"
-          element={session ? <Dashboard /> : <Navigate replace to="/login" />}
+          element={
+            session ? (
+              <Dashboard session={session} logout={logout} />
+            ) : (
+              <Navigate replace to="/login" />
+            )
+          }
         />
         <Route
           path="/login"

@@ -2,21 +2,25 @@ const { Model, DataTypes } = require("sequelize");
 
 const { sequelize } = require("../util/db");
 
-class Session extends Model {}
+class Transaction extends Model {}
 
-Session.init(
+Transaction.init(
   {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
     },
-    token: {
-      type: DataTypes.TEXT,
+    marca_de_tiempo: {
+      type: DataTypes.DATE,
       allowNull: false,
     },
-    validoHasta: {
-      type: DataTypes.TIME,
+    importe_en_dolares: {
+      type: DataTypes.DECIMAL(5, 2),
+      allowNull: false,
+    },
+    tasa_bcv: {
+      type: DataTypes.DECIMAL(6, 2),
       allowNull: false,
     },
   },
@@ -24,8 +28,8 @@ Session.init(
     sequelize,
     underscored: true,
     timestamps: false,
-    modelName: "sesion",
+    modelName: "transacciones",
   },
 );
 
-module.exports = Session;
+module.exports = Transaction;

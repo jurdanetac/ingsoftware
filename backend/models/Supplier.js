@@ -2,21 +2,25 @@ const { Model, DataTypes } = require("sequelize");
 
 const { sequelize } = require("../util/db");
 
-class Session extends Model {}
+class Supplier extends Model {}
 
-Session.init(
+Supplier.init(
   {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
     },
-    token: {
-      type: DataTypes.TEXT,
+    nombre: {
+      type: DataTypes.STRING(50),
       allowNull: false,
     },
-    validoHasta: {
-      type: DataTypes.TIME,
+    rif: {
+      type: DataTypes.STRING(12),
+      allowNull: false,
+    },
+    direccion: {
+      type: DataTypes.STRING(80),
       allowNull: false,
     },
   },
@@ -24,8 +28,8 @@ Session.init(
     sequelize,
     underscored: true,
     timestamps: false,
-    modelName: "sesion",
+    modelName: "proveedores",
   },
 );
 
-module.exports = Session;
+module.exports = Supplier;

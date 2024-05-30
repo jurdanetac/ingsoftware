@@ -60,6 +60,133 @@ module.exports = {
       },
     });
 
+    await queryInterface.createTable("clientes", {
+      id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+      },
+      nombre: {
+        type: DataTypes.STRING(45),
+        allowNull: false,
+      },
+      direccion: {
+        type: DataTypes.STRING(45),
+        allowNull: false,
+      },
+      telefono: {
+        type: DataTypes.STRING(16),
+        allowNull: false,
+      },
+      cedula: {
+        type: DataTypes.STRING(12),
+        allowNull: false,
+      },
+    });
+
+    await queryInterface.createTable("proveedores", {
+      id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+      },
+      nombre: {
+        type: DataTypes.STRING(50),
+        allowNull: false,
+      },
+      rif: {
+        type: DataTypes.STRING(12),
+        allowNull: false,
+      },
+      direccion: {
+        type: DataTypes.STRING(80),
+        allowNull: false,
+      },
+    });
+
+    await queryInterface.createTable("productos", {
+      id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+      },
+      nombre: {
+        type: DataTypes.STRING(20),
+        allowNull: false,
+      },
+      fecha_de_vencimiento: {
+        type: DataTypes.DATE,
+        allowNull: false,
+      },
+      cantidad_disponible: {
+        type: DataTypes.INTEGER(3),
+        allowNull: false,
+      },
+      imagen: {
+        type: DataTypes.BLOB("long"),
+      },
+      precio_en_dolares: {
+        type: DataTypes.DECIMAL(4, 2),
+        allowNull: false,
+      },
+      unidad_de_medicion: {
+        type: DataTypes.STRING(3),
+        allowNull: false,
+      },
+    });
+
+    await queryInterface.createTable("transacciones", {
+      id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+      },
+      marca_de_tiempo: {
+        type: DataTypes.DATE,
+        allowNull: false,
+      },
+      importe_en_dolares: {
+        type: DataTypes.DECIMAL(5, 2),
+        allowNull: false,
+      },
+      tasa_bcv: {
+        type: DataTypes.DECIMAL(6, 2),
+        allowNull: false,
+      },
+      clientes_id: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+        references: { model: "clientes", key: "id" },
+      },
+      proveedores_id: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+        references: { model: "proveedores", key: "id" },
+      },
+      usuarios_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: { model: "usuarios", key: "id" },
+      },
+    });
+
+    await queryInterface.createTable("transacciones_tiene_productos", {
+      transacciones_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: { model: "transacciones", key: "id" },
+      },
+      productos_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: { model: "productos", key: "id" },
+      },
+      cantidad: {
+        type: DataTypes.INTEGER(3),
+        allowNull: false,
+      },
+    });
+
     /*
     await queryInterface.bulkInsert("usuarios", [
       {
@@ -107,5 +234,9 @@ module.exports = {
   down: async ({ context: queryInterface }) => {
     await queryInterface.dropTable("sesiones");
     await queryInterface.dropTable("usuarios");
+    await queryInterface.dropTable("clientes");
+    await queryInterface.dropTable("proveedores");
+    await queryInterface.dropTable("productos");
+    await queryInterface.dropTable("transacciones");
   },
 };

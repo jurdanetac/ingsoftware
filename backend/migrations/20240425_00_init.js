@@ -71,7 +71,7 @@ module.exports = {
         allowNull: false,
       },
       direccion: {
-        type: DataTypes.STRING(45),
+        type: DataTypes.STRING(80),
         allowNull: false,
       },
       telefono: {
@@ -186,6 +186,9 @@ module.exports = {
         allowNull: false,
       },
     });
+
+    // TODO create triggers too
+    // await queryInterface.sequelize.query(`CREATE TRIGGER \`check_admin_compra\` BEFORE INSERT ON \`transacciones\` FOR EACH ROW BEGIN IF NEW.importe_en_dolares < 0 AND NEW.usuarios_id NOT IN (SELECT id FROM usuarios WHERE rol = 'administrador') THEN SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: Solo el administrador puede registrar una compra.'; END IF; END$$ USE \`camicandy\`$$ CREATE TRIGGER \`validar_clientes_proveedores\` BEFORE INSERT ON \`transacciones\` FOR EACH ROW BEGIN IF (NEW.clientes_id IS NULL AND NEW.proveedores_id IS NULL) OR (NEW.clientes_id IS NOT NULL AND NEW.proveedores_id IS NOT NULL) THEN SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: clientes_id y proveedores_id no pueden ser ambos NULL o ambos diferentes de NULL.'; END IF; END$$ USE \`camicandy\`$$ CREATE TRIGGER \`validar_monto\` BEFORE INSERT ON \`transacciones\` FOR EACH ROW BEGIN IF (NEW.importe_en_dolares > 0 AND NEW.proveedores_id IS NOT NULL) THEN SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: El importe de una compra no puede ser positivo.'; ELSEIF (NEW.importe_en_dolares < 0 AND NEW.clientes_id IS NOT NULL) THEN SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: El importe de una venta no puede ser negativo.'; END IF; END$$ USE \`camicandy\`$$ CREATE TRIGGER \`actualizar_stock_monto\` AFTER INSERT ON \`transacciones_tiene_productos\` FOR EACH ROW BEGIN DECLARE total_amount DECIMAL(10, 2); -- Actualizar stock del producto UPDATE productos SET cantidad_disponible = cantidad_disponible - NEW.cantidad WHERE id = NEW.productos_id; -- Calcular el monto total de la transacción SET total_amount = (SELECT SUM(cantidad * precio_en_dolares) FROM transacciones_tiene_productos JOIN productos ON transacciones_tiene_productos.productos_id = productos.id WHERE transacciones_tiene_productos.transacciones_id = NEW.transacciones_id); -- Actualizar el importe de la transacción UPDATE transacciones SET importe_en_dolares = total_amount WHERE id = NEW.transacciones_id; END$$`);
 
     /*
     await queryInterface.bulkInsert("usuarios", [

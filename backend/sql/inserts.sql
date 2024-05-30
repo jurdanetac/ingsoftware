@@ -16,9 +16,11 @@ INSERT INTO `productos` (`id`, `nombre`, `fecha_de_vencimiento`, `cantidad_dispo
 -- Volcado de datos para la tabla `usuarios`
 --
 
-INSERT INTO `usuarios` (`id`, `cedula`, `nombre`, `rol`, `hash_de_contrasena`) VALUES
-(1, '29903089', 'juan', 'administrador', '$2b$10$mVwVDKUIArIjnW9zpNSj5.NUzkjBGNFTKXEVpM9bGHZ/dbSiVhWa2'),
-(2, '29877987', 'samuel', 'empleado', '$2b$10$V1rms6bjuDgK2wMStrN53uOheLkNQXXEd4ZCUP5e2CpAbC8jzLKFi');
+INSERT INTO usuarios (id, cedula, nombre, rol, hash_de_contrasena, pregunta_seguridad, respuesta_seguridad)
+VALUES
+  (1, "29903089", "juan", "administrador", "$2b$10$mVwVDKUIArIjnW9zpNSj5.NUzkjBGNFTKXEVpM9bGHZ/dbSiVhWa2", "¿Cuál es tu postre favorito?", "$2b$10$mVwVDKUIArIjnW9zpNSj5.NUzkjBGNFTKXEVpM9bGHZ/dbSiVhWa2"),
+  (2, "29877987", "samuel", "empleado", "$2b$10$V1rms6bjuDgK2wMStrN53uOheLkNQXXEd4ZCUP5e2CpAbC8jzLKFi", "¿Cuál es tu postre favorito?", "$2b$10$V1rms6bjuDgK2wMStrN53uOheLkNQXXEd4ZCUP5e2CpAbC8jzLKFi");
+
 
 
 --

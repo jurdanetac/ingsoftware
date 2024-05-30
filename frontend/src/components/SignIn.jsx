@@ -31,6 +31,7 @@ export default function SignIn({ setSession }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [notification, setNotification] = useState("");
+  const [tries, setTries] = useState(0);
 
   // clear notification after 5 seconds
   useEffect(() => {
@@ -38,6 +39,15 @@ export default function SignIn({ setSession }) {
       setNotification("");
     }, 5000);
   }, [notification]);
+
+  // reset tries after 1 minute
+  useEffect(() => {
+    if (tries === 3) {
+      setTimeout(() => {
+        setTries(0);
+      }, 60000);
+    }
+  }, [tries]);
 
   const setCedula = (cedula) => {
     // only allow 9 characters
@@ -57,6 +67,13 @@ export default function SignIn({ setSession }) {
       setNotification("Por favor, llene todos los campos");
       return;
     }
+
+    if (tries === 3) {
+      setNotification("Demasiados intentos, intente más tarde");
+      return;
+    }
+
+    setTries(tries + 1);
 
     console.log("logging in with:", {
       username,

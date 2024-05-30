@@ -32,12 +32,12 @@ loginRouter.post("/", async (request, response) => {
     // expiresIn: 1 * 1, // test for expired token
   });
 
-  // save session in database log (table `sesiones`)
-  await Session.create({
-    token: token,
-    usuariosId: user.id,
-    validoHasta: new Date(Date.now() + 60 * 60 * 1000),
-  });
+  // TODO save session in database log (table `sesiones`)
+  // await Session.create({
+  //   token: token,
+  //   usuariosId: user.id,
+  //   validoHasta: new Date(Date.now() + 60 * 60 * 1000),
+  // });
 
   response
     .status(200)

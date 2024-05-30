@@ -30,12 +30,12 @@ const defaultTheme = createTheme({
 export default function SignIn({ setSession }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [notification, setNotification] = useState(null);
+  const [notification, setNotification] = useState("");
 
-  // remove notification after 5 seconds
+  // clear notification after 5 seconds
   useEffect(() => {
     setTimeout(() => {
-      setNotification(null);
+      setNotification("");
     }, 5000);
   }, [notification]);
 
@@ -68,10 +68,12 @@ export default function SignIn({ setSession }) {
       .then((response) => {
         console.log("login response:", response);
         setSession(response);
+        window.localStorage.setItem("session", JSON.stringify(response));
+        console.log("session stored in local storage");
       })
       .catch((error) => {
         console.error("login error:", error);
-        setNotification("Error al iniciar sesión");
+        setNotification("Cédula o contraseña incorrecta");
       });
   };
 

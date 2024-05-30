@@ -30,9 +30,43 @@ const App = () => {
 
   // ping the server to wake up
   useEffect(() => {
-    apiService.ping().then((res) => {
-      console.log(res);
-    });
+    apiService
+      .ping()
+      .then((res) => {
+        console.log("server woke up");
+      })
+      .catch(() => {
+        // TODO handle this better
+        window.alert("Server is down, please try again later");
+        window.location.reload();
+      });
+  }, []);
+
+  const isTokenExpired = (token) =>
+    Date.now() >= JSON.parse(atob(token.split(".")[1])).exp * 1000;
+
+  // checks if user is logged in on page load
+  useEffect(() => {
+    const sessionJSON = window.localStorage.getItem("session");
+
+    if (sessionJSON) {
+      console.log(
+        "session found in local storage, checking if token is expired...",
+      );
+      const expired = isTokenExpired(JSON.parse(sessionJSON).token);
+      console.log(expired ? "token expired" : "token not expired");
+
+      if (expired) {
+        console.log("removing expired session from local storage");
+        window.localStorage.removeItem("session");
+        console.log("session removed from local storage");
+      } else {
+        console.log("loading session from local storage");
+        setSession(JSON.parse(sessionJSON));
+        apiService.setToken(sessionJSON.token);
+        console.log("session loaded from local storage");
+      }
+    }
   }, []);
 
   // react router, url handling

@@ -1,5 +1,12 @@
 import axios from "redaxios";
 
+let token = null;
+
+// Set session token for all requests
+const setToken = (newToken) => {
+  token = `Bearer ${newToken}`;
+};
+
 // Render Backend
 const baseUrl = "https://backend-ingsoftware.onrender.com";
 // Local Backend
@@ -24,4 +31,5 @@ const login = async (username, password) => {
 export default {
   ping,
   login,
+  setToken,
 };

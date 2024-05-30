@@ -28,8 +28,36 @@ const login = async (username, password) => {
   return response.data;
 };
 
+const getTransactions = async () => {
+  const response = await axios.get(`${baseUrl}/api/transactions`);
+
+  return response.data;
+};
+
+const getUsers = async () => {
+  const response = await axios.get(`${baseUrl}/api/users`);
+
+  return response.data;
+};
+
+const getClients = async () => {
+  const response = await axios.get(`${baseUrl}/api/clients`);
+
+  return response.data;
+};
+
+const getSuppliers = async () => {
+  const response = await axios.get(`${baseUrl}/api/suppliers`);
+
+  return response.data;
+};
+
 export default {
   ping,
   login,
   setToken,
+  getTransactions,
+  getUsers,
+  getClients,
+  getSuppliers,
 };

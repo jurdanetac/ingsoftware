@@ -15,9 +15,11 @@ import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import NotificationsIcon from "@mui/icons-material/Notifications";
 import LogoutIcon from "@mui/icons-material/Logout";
-import { mainListItems, secondaryListItems } from "./listItems";
+import {
+  mainListItems,
+  // secondaryListItem
+} from "./listItems";
 
 import Chart from "./Chart";
 import Deposits from "./Deposits";
@@ -110,16 +112,11 @@ export default function Dashboard({ session, logout }) {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-              Dashboard
+              Página Principal
             </Typography>
             <IconButton color="inherit">
               <Badge color="secondary">
                 <LogoutIcon onClick={logout} />
-              </Badge>
-            </IconButton>
-            <IconButton color="inherit">
-              <Badge badgeContent={4} color="secondary">
-                <NotificationsIcon />
               </Badge>
             </IconButton>
           </Toolbar>
@@ -141,7 +138,7 @@ export default function Dashboard({ session, logout }) {
           <List component="nav">
             {mainListItems}
             <Divider sx={{ my: 1 }} />
-            {secondaryListItems}
+            {/*secondaryListItems*/}
           </List>
         </Drawer>
         <Box
@@ -185,7 +182,7 @@ export default function Dashboard({ session, logout }) {
                   <Deposits />
                 </Paper>
               </Grid>
-              {/* Recent Orders */}
+              {/* Transacciones Recientes */}
               <Grid item xs={12}>
                 <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
                   <Orders />

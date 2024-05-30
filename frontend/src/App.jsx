@@ -37,7 +37,7 @@ const App = () => {
   useEffect(() => {
     apiService
       .ping()
-      .then((res) => {
+      .then(() => {
         console.log("server woke up");
       })
       .catch(() => {

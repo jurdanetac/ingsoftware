@@ -102,13 +102,7 @@ const App = () => {
         />
         <Route
           path="/clientes"
-          element={
-            session ? (
-              <Clients />
-            ) : (
-              <Navigate replace to="/login" />
-            )
-          }
+          element={session ? <Clients /> : <Navigate replace to="/login" />}
         />
         <Route path="*" element={<Navigate replace to="/" />} />
       </Routes>

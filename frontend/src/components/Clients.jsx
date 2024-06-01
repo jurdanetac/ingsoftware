@@ -153,12 +153,12 @@ export default function Clients({ session, logout }) {
         >
           <Toolbar />
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-              {/* Transacciones Recientes */}
-              <Grid item xs={12}>
-                <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
-                  <Clientes />
-                </Paper>
-              </Grid>
+            {/* Transacciones Recientes */}
+            <Grid item xs={12}>
+              <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
+                <Clientes />
+              </Paper>
+            </Grid>
             <Copyright sx={{ pt: 4 }} />
           </Container>
         </Box>

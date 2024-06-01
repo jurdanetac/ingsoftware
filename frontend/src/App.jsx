@@ -14,6 +14,8 @@ import {
 import SignIn from "./components/SignIn";
 import Dashboard from "./components/Dashboard";
 
+import Clients from "./components/Clients";
+
 import apiService from "./services/api.js";
 
 const App = () => {
@@ -95,6 +97,16 @@ const App = () => {
               <Navigate replace to="/" />
             ) : (
               <SignIn setSession={setSession} />
+            )
+          }
+        />
+        <Route
+          path="/clientes"
+          element={
+            session ? (
+              <Clients />
+            ) : (
+              <Navigate replace to="/login" />
             )
           }
         />

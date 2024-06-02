@@ -6,12 +6,12 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import PeopleIcon from "@mui/icons-material/People";
 import BarChartIcon from "@mui/icons-material/BarChart";
 import LayersIcon from "@mui/icons-material/Layers";
-import DashboardIcon from '@mui/icons-material/Dashboard';
-import {Link} from 'react-router-dom';
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import { Link } from "react-router-dom";
 
 export const mainListItems = (
   <React.Fragment>
-    <Link to="/" style={{textDecoration: 'none', color: 'white'}}>
+    <Link to="/" style={{ textDecoration: "none", color: "white" }}>
       <ListItemButton>
         <ListItemIcon>
           <DashboardIcon />
@@ -20,7 +20,7 @@ export const mainListItems = (
       </ListItemButton>
     </Link>
 
-    <Link to="/clientes" style={{textDecoration: 'none', color: 'white'}}>
+    <Link to="/clientes" style={{ textDecoration: "none", color: "white" }}>
       <ListItemButton>
         <ListItemIcon>
           <PeopleIcon />
@@ -29,7 +29,10 @@ export const mainListItems = (
       </ListItemButton>
     </Link>
 
-    <Link to="/transacciones" style={{textDecoration: 'none', color: 'white'}}>
+    <Link
+      to="/transacciones"
+      style={{ textDecoration: "none", color: "white" }}
+    >
       <ListItemButton>
         <ListItemIcon>
           <ShoppingCartIcon />
@@ -38,7 +41,7 @@ export const mainListItems = (
       </ListItemButton>
     </Link>
 
-    <Link to="/reportes" style={{textDecoration: 'none', color: 'white'}}>
+    <Link to="/reportes" style={{ textDecoration: "none", color: "white" }}>
       <ListItemButton>
         <ListItemIcon>
           <BarChartIcon />
@@ -47,7 +50,7 @@ export const mainListItems = (
       </ListItemButton>
     </Link>
 
-    <Link to="/ayuda" style={{textDecoration: 'none', color: 'white'}}>
+    <Link to="/ayuda" style={{ textDecoration: "none", color: "white" }}>
       <ListItemButton>
         <ListItemIcon>
           <LayersIcon />

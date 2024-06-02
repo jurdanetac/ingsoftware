@@ -8,9 +8,9 @@ const setToken = (newToken) => {
 };
 
 // Render Backend
-const baseUrl = "https://backend-ingsoftware.onrender.com";
+// const baseUrl = "https://backend-ingsoftware.onrender.com";
 // Local Backend
-// const baseUrl = "http://localhost:3000";
+const baseUrl = "http://localhost:3000";
 
 const ping = async () => {
   // used to wake up the backend since it's on render's free tier
@@ -52,6 +52,16 @@ const getSuppliers = async () => {
   return response.data;
 };
 
+const addClient = async (client) => {
+  const response = await axios.post(`${baseUrl}/api/clientes`, client, {
+    headers: {
+      Authorization: token,
+    },
+  });
+
+  return response.data;
+};
+
 export default {
   ping,
   login,
@@ -60,4 +70,5 @@ export default {
   getUsers,
   getClients,
   getSuppliers,
+  addClient,
 };

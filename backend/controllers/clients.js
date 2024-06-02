@@ -8,4 +8,10 @@ router.get("/", async (req, res) => {
   res.json(clients);
 });
 
+router.post("/", async (req, res) => {
+  const client = await Client.create(req.body);
+
+  res.json(client);
+});
+
 module.exports = router;

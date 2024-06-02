@@ -7,15 +7,34 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Title from "./Title";
 
-import apiService from "../services/api";
+import InputField from "./InputField";
 
-function preventDefault(event) {
-  event.preventDefault();
-}
+import apiService from "../services/api";
 
 export default function Clientes() {
   const [rows, setRows] = React.useState([]);
   const [n, setN] = React.useState(5);
+  const [showForm, setShowForm] = React.useState(false);
+
+  const [nombre, setNombre] = React.useState("");
+  const [cedula, setCedula] = React.useState("");
+  const [telefono, setTelefono] = React.useState("");
+  const [direccion, setDireccion] = React.useState("");
+
+  const handleAdd = () => {
+    apiService.addClient({ nombre, cedula, telefono, direccion }).then((res) => {
+      // TODO validations and error handling
+      // TODO sort rows
+      // TODO show success message
+      setRows([...rows, res]);
+      setNombre("");
+      // TODO V-G-J
+      setCedula("");
+      setTelefono("");
+      setDireccion("");
+      setShowForm(false);
+    });
+  };
 
   React.useEffect(() => {
     apiService.getClients().then((data) => {
@@ -49,7 +68,36 @@ export default function Clientes() {
       <Button color="primary" onClick={() => setN(n + 5)} sx={{ mt: 3 }}>
         Ver más clientes
       </Button>
-      <Button>Añadir</Button>
+      <Button onClick={() => setShowForm(!showForm)}>Añadir</Button>
+      {showForm && (
+        <>
+          <InputField
+            id="cliente"
+            label="Cliente"
+            value={nombre}
+            onChange={setNombre}
+          />
+          <InputField
+            id="cedula"
+            label="Cédula"
+            value={cedula}
+            onChange={setCedula}
+          />
+          <InputField
+            id="telefono"
+            label="Teléfono"
+            value={telefono}
+            onChange={setTelefono}
+          />
+          <InputField
+            id="direccion"
+            label="Dirección"
+            value={direccion}
+            onChange={setDireccion}
+          />
+          <Button onClick={handleAdd}>Agregar</Button>
+        </>
+      )}
     </React.Fragment>
   );
 }

@@ -8,37 +8,53 @@ import TableRow from "@mui/material/TableRow";
 import Title from "./Title";
 
 import InputField from "./InputField";
+import DeleteIcon from '@mui/icons-material/Delete';
+import CreateIcon from '@mui/icons-material/Create';
 
 import apiService from "../services/api";
 
 export default function Clientes() {
+  // Table states
   const [rows, setRows] = React.useState([]);
   const [n, setN] = React.useState(5);
-  const [showForm, setShowForm] = React.useState(false);
 
+  // Form states
+  const [showForm, setShowForm] = React.useState(false);
   const [nombre, setNombre] = React.useState("");
   const [cedula, setCedula] = React.useState("");
   const [telefono, setTelefono] = React.useState("");
   const [direccion, setDireccion] = React.useState("");
 
+  // Clear form fields
+  const clearForm = () => {
+    setNombre("");
+    setCedula("");
+    setTelefono("");
+    setDireccion("");
+  };
+
+  // Sort rows by name alphabetically ascending
+  const sortRows = (rows) => rows.sort((a, b) => a.nombre.localeCompare(b.nombre));
+
+  // Add client logic
   const handleAdd = () => {
     apiService.addClient({ nombre, cedula, telefono, direccion }).then((res) => {
       // TODO validations and error handling
-      // TODO sort rows
-      // TODO show success message
-      setRows([...rows, res]);
-      setNombre("");
       // TODO V-G-J
-      setCedula("");
-      setTelefono("");
-      setDireccion("");
-      setShowForm(false);
+      setRows(sortRows([...rows, res]));
+      clearForm();
+      window.alert("Cliente añadido correctamente");
+    }).catch((err) => {
+      console.error(err);
+      window.alert(`Error al añadir cliente : ${err}`);
+      clearForm();
     });
   };
 
+  // Fetch clients on component mount
   React.useEffect(() => {
     apiService.getClients().then((data) => {
-      setRows(data.sort((a, b) => a.nombre.localeCompare(b.nombre)));
+      setRows(sortRows(data));
     });
   }, []);
 
@@ -52,6 +68,7 @@ export default function Clientes() {
             <TableCell>Cédula</TableCell>
             <TableCell>Teléfono</TableCell>
             <TableCell>Dirección</TableCell>
+            <TableCell>Operaciones</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -61,6 +78,10 @@ export default function Clientes() {
               <TableCell>{row.cedula}</TableCell>
               <TableCell>{row.telefono}</TableCell>
               <TableCell>{row.direccion}</TableCell>
+              <TableCell>
+                <DeleteIcon />
+                <CreateIcon />
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
@@ -68,7 +89,11 @@ export default function Clientes() {
       <Button color="primary" onClick={() => setN(n + 5)} sx={{ mt: 3 }}>
         Ver más clientes
       </Button>
-      <Button onClick={() => setShowForm(!showForm)}>Añadir</Button>
+      {setShowForm && (
+        <Button color="primary" variant="contained" onClick={() => setShowForm(!showForm)} sx={{ mt: 3 }}>
+          {showForm ? "Ocultar formulario" : "Nuevo cliente"}
+        </Button>
+      )}
       {showForm && (
         <>
           <InputField
@@ -95,7 +120,7 @@ export default function Clientes() {
             value={direccion}
             onChange={setDireccion}
           />
-          <Button onClick={handleAdd}>Agregar</Button>
+          <Button onClick={handleAdd} variant="contained" color="success" sx={{ mt: 3 }}>Añadir</Button>
         </>
       )}
     </React.Fragment>

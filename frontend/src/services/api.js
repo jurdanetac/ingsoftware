@@ -29,25 +29,25 @@ const login = async (username, password) => {
 };
 
 const getTransactions = async () => {
-  const response = await axios.get(`${baseUrl}/api/transactions`);
+  const response = await axios.get(`${baseUrl}/api/transacciones`);
 
   return response.data;
 };
 
 const getUsers = async () => {
-  const response = await axios.get(`${baseUrl}/api/users`);
+  const response = await axios.get(`${baseUrl}/api/usuarios`);
 
   return response.data;
 };
 
 const getClients = async () => {
-  const response = await axios.get(`${baseUrl}/api/clients`);
+  const response = await axios.get(`${baseUrl}/api/clientes`);
 
   return response.data;
 };
 
 const getSuppliers = async () => {
-  const response = await axios.get(`${baseUrl}/api/suppliers`);
+  const response = await axios.get(`${baseUrl}/api/proveedores`);
 
   return response.data;
 };

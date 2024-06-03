@@ -14,10 +14,7 @@ import Paper from "@mui/material/Paper";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import LogoutIcon from "@mui/icons-material/Logout";
-import {
-  mainListItems,
-  // secondaryListItem
-} from "./listItems";
+import { mainListItems } from "./listItems";
 
 import Copyright from "./Copyright";
 import Clientes from "./Clientes";

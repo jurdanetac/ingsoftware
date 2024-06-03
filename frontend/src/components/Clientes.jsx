@@ -5,45 +5,17 @@ import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import Title from "./Title";
-
-import InputField from "./InputField";
 import DeleteIcon from "@mui/icons-material/Delete";
 import CreateIcon from "@mui/icons-material/Create";
+
+import InputField from "./InputField";
+import Title from "./Title";
+
+import { Link } from "react-router-dom";
 
 import apiService from "../services/api";
 
 export default function Clientes() {
-  // Form to add a new client
-  const Form = () => (
-    <>
-      <InputField
-        id="cliente"
-        label="Cliente"
-        value={nombre}
-        onChange={setNombre}
-      />
-      <InputField
-        id="cedula"
-        label="Cédula"
-        value={cedula}
-        onChange={setCedula}
-      />
-      <InputField
-        id="telefono"
-        label="Teléfono"
-        value={telefono}
-        onChange={setTelefono}
-      />
-      <InputField
-        id="direccion"
-        label="Dirección"
-        value={direccion}
-        onChange={setDireccion}
-      />
-    </>
-  );
-
   // Table states
   const [rows, setRows] = React.useState([]);
   const [n, setN] = React.useState(5);
@@ -80,13 +52,34 @@ export default function Clientes() {
         // TODO V-G-J
         setRows(sortRows([...rows, res]));
         clearForm();
+        setShowForm(false);
         window.alert("Cliente añadido correctamente");
       })
       .catch((err) => {
         console.error(err);
         window.alert(`Error al añadir cliente : ${err}`);
         clearForm();
+        setShowForm(false);
       });
+  };
+
+  const handleDelete = (id) => {
+    if (!window.confirm("¿Está seguro que desea eliminar este cliente?")) {
+      return;
+    }
+
+    apiService.getTransactions().then((res) => {
+      if (res.find((r) => r.clientes_id === id)) {
+        window.alert(
+          "No se puede eliminar un cliente que haya realizado transacciones",
+        );
+        return;
+      }
+      apiService.deleteClient(id).then(() => {
+        setRows(rows.filter((r) => r.id !== id));
+        window.alert("Cliente eliminado correctamente");
+      });
+    });
   };
 
   // Fetch clients on component mount
@@ -117,8 +110,16 @@ export default function Clientes() {
               <TableCell>{row.telefono}</TableCell>
               <TableCell>{row.direccion}</TableCell>
               <TableCell>
-                <DeleteIcon />
-                <CreateIcon />
+                <DeleteIcon
+                  onClick={() => handleDelete(row.id)}
+                  sx={{ cursor: "pointer" }}
+                />
+                <Link
+                  to={`/clientes/${row.id}`}
+                  style={{ textDecoration: "none", color: "white" }}
+                >
+                  <CreateIcon />
+                </Link>
               </TableCell>
             </TableRow>
           ))}
@@ -137,7 +138,34 @@ export default function Clientes() {
           {showForm ? "Ocultar formulario" : "Nuevo cliente"}
         </Button>
       )}
-      {showForm && <Form />}
+      {showForm && (
+        <>
+          <InputField
+            id="cliente"
+            label="Cliente"
+            value={nombre}
+            onChange={setNombre}
+          />
+          <InputField
+            id="cedula"
+            label="Cédula"
+            value={cedula}
+            onChange={setCedula}
+          />
+          <InputField
+            id="telefono"
+            label="Teléfono"
+            value={telefono}
+            onChange={setTelefono}
+          />
+          <InputField
+            id="direccion"
+            label="Dirección"
+            value={direccion}
+            onChange={setDireccion}
+          />
+        </>
+      )}
       {showForm && (
         <Button
           color="success"

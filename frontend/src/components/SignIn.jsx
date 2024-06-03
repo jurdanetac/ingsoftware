@@ -85,6 +85,7 @@ export default function SignIn({ setSession }) {
       .then((response) => {
         console.log("login response:", response);
         setSession(response);
+        apiService.setToken(response.token);
         window.localStorage.setItem("session", JSON.stringify(response));
         console.log("session stored in local storage");
       })

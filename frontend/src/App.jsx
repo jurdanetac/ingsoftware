@@ -57,21 +57,22 @@ const App = () => {
   // checks if user is logged in on page load
   useEffect(() => {
     const sessionJSON = window.localStorage.getItem("session");
+    const parsedSession = JSON.parse(sessionJSON);
 
     if (sessionJSON) {
       console.log(
         "session found in local storage, checking if token is expired...",
       );
-      const expired = isTokenExpired(JSON.parse(sessionJSON).token);
+      const expired = isTokenExpired(parsedSession.token);
       console.log(expired ? "token expired" : "token not expired");
 
       if (expired) {
         console.log("removing expired session from local storage");
         logout();
+        apiService.setToken(null);
         console.log("session removed from local storage");
       } else {
         console.log("loading session from local storage");
-        const parsedSession = JSON.parse(sessionJSON);
         setSession(parsedSession);
         apiService.setToken(parsedSession.token);
         console.log("session loaded from local storage");

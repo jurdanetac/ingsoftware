@@ -15,6 +15,7 @@ import SignIn from "./components/SignIn";
 import Dashboard from "./components/Dashboard";
 
 import Clients from "./components/Clients";
+import Client from "./components/Client";
 
 import apiService from "./services/api.js";
 
@@ -109,6 +110,16 @@ const App = () => {
           element={
             session ? (
               <Clients logout={logout} />
+            ) : (
+              <Navigate replace to="/login" />
+            )
+          }
+        />
+        <Route
+          path="/clientes/:id"
+          element={
+            session ? (
+              <Client logout={logout} />
             ) : (
               <Navigate replace to="/login" />
             )

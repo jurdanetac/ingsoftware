@@ -8,12 +8,42 @@ import TableRow from "@mui/material/TableRow";
 import Title from "./Title";
 
 import InputField from "./InputField";
-import DeleteIcon from '@mui/icons-material/Delete';
-import CreateIcon from '@mui/icons-material/Create';
+import DeleteIcon from "@mui/icons-material/Delete";
+import CreateIcon from "@mui/icons-material/Create";
 
 import apiService from "../services/api";
 
 export default function Clientes() {
+  // Form to add a new client
+  const Form = () => (
+    <>
+      <InputField
+        id="cliente"
+        label="Cliente"
+        value={nombre}
+        onChange={setNombre}
+      />
+      <InputField
+        id="cedula"
+        label="Cédula"
+        value={cedula}
+        onChange={setCedula}
+      />
+      <InputField
+        id="telefono"
+        label="Teléfono"
+        value={telefono}
+        onChange={setTelefono}
+      />
+      <InputField
+        id="direccion"
+        label="Dirección"
+        value={direccion}
+        onChange={setDireccion}
+      />
+    </>
+  );
+
   // Table states
   const [rows, setRows] = React.useState([]);
   const [n, setN] = React.useState(5);
@@ -34,21 +64,29 @@ export default function Clientes() {
   };
 
   // Sort rows by name alphabetically ascending
-  const sortRows = (rows) => rows.sort((a, b) => a.nombre.localeCompare(b.nombre));
+  const sortRows = (rows) =>
+    rows.sort((a, b) => a.nombre.localeCompare(b.nombre));
 
   // Add client logic
   const handleAdd = () => {
-    apiService.addClient({ nombre, cedula, telefono, direccion }).then((res) => {
-      // TODO validations and error handling
-      // TODO V-G-J
-      setRows(sortRows([...rows, res]));
-      clearForm();
-      window.alert("Cliente añadido correctamente");
-    }).catch((err) => {
-      console.error(err);
-      window.alert(`Error al añadir cliente : ${err}`);
-      clearForm();
-    });
+    if (!nombre || !cedula || !telefono || !direccion) {
+      window.alert("Por favor, llene todos los campos");
+      return;
+    }
+
+    apiService
+      .addClient({ nombre, cedula, telefono, direccion })
+      .then((res) => {
+        // TODO V-G-J
+        setRows(sortRows([...rows, res]));
+        clearForm();
+        window.alert("Cliente añadido correctamente");
+      })
+      .catch((err) => {
+        console.error(err);
+        window.alert(`Error al añadir cliente : ${err}`);
+        clearForm();
+      });
   };
 
   // Fetch clients on component mount
@@ -90,38 +128,25 @@ export default function Clientes() {
         Ver más clientes
       </Button>
       {setShowForm && (
-        <Button color="primary" variant="contained" onClick={() => setShowForm(!showForm)} sx={{ mt: 3 }}>
+        <Button
+          color="primary"
+          variant="contained"
+          onClick={() => setShowForm(!showForm)}
+          sx={{ mt: 3 }}
+        >
           {showForm ? "Ocultar formulario" : "Nuevo cliente"}
         </Button>
       )}
+      {showForm && <Form />}
       {showForm && (
-        <>
-          <InputField
-            id="cliente"
-            label="Cliente"
-            value={nombre}
-            onChange={setNombre}
-          />
-          <InputField
-            id="cedula"
-            label="Cédula"
-            value={cedula}
-            onChange={setCedula}
-          />
-          <InputField
-            id="telefono"
-            label="Teléfono"
-            value={telefono}
-            onChange={setTelefono}
-          />
-          <InputField
-            id="direccion"
-            label="Dirección"
-            value={direccion}
-            onChange={setDireccion}
-          />
-          <Button onClick={handleAdd} variant="contained" color="success" sx={{ mt: 3 }}>Añadir</Button>
-        </>
+        <Button
+          color="success"
+          variant="contained"
+          onClick={handleAdd}
+          sx={{ mt: 3 }}
+        >
+          Añadir
+        </Button>
       )}
     </React.Fragment>
   );

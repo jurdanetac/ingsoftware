@@ -12,6 +12,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import LogoutIcon from "@mui/icons-material/Logout";
 import Button from "@mui/material/Button";
+// import Grid from "@mui/material/Grid";
 import { mainListItems } from "./listItems";
 
 import AppBar from "./AppBar";
@@ -48,13 +49,16 @@ export default function Client({ session, logout }) {
         <Navigate replace to="/" />;
         return;
       }
+
+      console.log(client)
+
       setCliente(client);
       setNombre(client.nombre);
       setCedula(client.cedula);
       setTelefono(client.telefono);
       setDireccion(client.direccion);
     });
-  }, [id]);
+  }, []);
 
   const handleUpdate = () => {
     apiService

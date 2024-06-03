@@ -9,7 +9,14 @@ router.get("/", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-  const client = await Client.create(req.body);
+  const {nombre, cedula, telefono, direccion} = req.body;
+
+  const client = await Client.create({
+    nombre,
+    cedula,
+    telefono,
+    direccion
+  });
 
   res.json(client);
 });

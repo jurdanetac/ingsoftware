@@ -8,9 +8,9 @@ const setToken = (newToken) => {
 };
 
 // Render Backend
-// const baseUrl = "https://backend-ingsoftware.onrender.com";
+const baseUrl = "https://backend-ingsoftware.onrender.com";
 // Local Backend
-const baseUrl = "http://localhost:3000";
+// const baseUrl = "http://localhost:3000";
 
 const ping = async () => {
   // used to wake up the backend since it's on render's free tier

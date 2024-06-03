@@ -12,6 +12,7 @@ router.post("/", async (req, res) => {
   const {nombre, cedula, telefono, direccion} = req.body;
 
   const client = await Client.create({
+    id: null,
     nombre,
     cedula,
     telefono,

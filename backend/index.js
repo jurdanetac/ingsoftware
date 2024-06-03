@@ -6,7 +6,12 @@ const logger = require("morgan");
 
 const { PORT } = require("./util/config");
 const { connectToDatabase } = require("./util/db");
-const { errorHandler, unknownEndpoint } = require("./util/middleware");
+const {
+  errorHandler,
+  unknownEndpoint,
+  tokenExtractor,
+  userExtractor,
+} = require("./util/middleware");
 
 const pingRouter = require("./controllers/ping");
 const infoRouter = require("./controllers/info");
@@ -25,7 +30,7 @@ app.use("/api/ping", pingRouter);
 app.use("/api/info", infoRouter);
 app.use("/api/login", loginRouter);
 app.use("/api/usuarios", userRouter);
-app.use("/api/clientes", clientRouter);
+app.use("/api/clientes", tokenExtractor, userExtractor, clientRouter);
 app.use("/api/proveedores", supplierRouter);
 app.use("/api/transacciones", transactionRouter);
 app.use("/", indexRouter);

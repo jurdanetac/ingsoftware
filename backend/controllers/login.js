@@ -39,9 +39,13 @@ loginRouter.post("/", async (request, response) => {
   //   validoHasta: new Date(Date.now() + 60 * 60 * 1000),
   // });
 
-  response
-    .status(200)
-    .send({ token, username: user.cedula, name: user.nombre, rol: user.rol });
+  response.status(200).send({
+    token,
+    username: user.cedula,
+    name: user.nombre,
+    rol: user.rol,
+    id: user.id,
+  });
 });
 
 module.exports = loginRouter;

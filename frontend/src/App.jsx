@@ -27,6 +27,8 @@ const App = () => {
    *  token: token,
    *  username: "user",
    *  name: "name",
+   *  rol: "rol",
+   *  id: "id",
    * }
    * */
 
@@ -69,8 +71,9 @@ const App = () => {
         console.log("session removed from local storage");
       } else {
         console.log("loading session from local storage");
-        setSession(JSON.parse(sessionJSON));
-        apiService.setToken(sessionJSON.token);
+        const parsedSession = JSON.parse(sessionJSON);
+        setSession(parsedSession);
+        apiService.setToken(parsedSession.token);
         console.log("session loaded from local storage");
       }
     }

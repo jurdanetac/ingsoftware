@@ -195,93 +195,97 @@ export default function Clients({ session, logout }) {
             {/* Transacciones Recientes */}
             <Grid item xs={12}>
               <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
-    <React.Fragment>
-      <Title>Clientes</Title>
-      <Table size="small">
-        <TableHead>
-          <TableRow>
-            <TableCell>Nombre</TableCell>
-            <TableCell>Cédula</TableCell>
-            <TableCell>Teléfono</TableCell>
-            <TableCell>Dirección</TableCell>
-            <TableCell>Operaciones</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.slice(0, n).map((row) => (
-            <TableRow key={row.id}>
-              <TableCell>{row.nombre}</TableCell>
-              <TableCell>{row.cedula}</TableCell>
-              <TableCell>{row.telefono}</TableCell>
-              <TableCell>{row.direccion}</TableCell>
-              <TableCell>
-                <DeleteIcon
-                  onClick={() => handleDelete(row.id)}
-                  sx={{ cursor: "pointer" }}
-                />
-                <Link
-                  to={`/clientes/${row.id}`}
-                  style={{ textDecoration: "none", color: "white" }}
-                >
-                  <CreateIcon />
-                </Link>
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-      <Button color="primary" onClick={() => setN(n + 5)} sx={{ mt: 3 }}>
-        Ver más clientes
-      </Button>
-      {setShowForm && (
-        <Button
-          color="primary"
-          variant="contained"
-          onClick={() => setShowForm(!showForm)}
-          sx={{ mt: 3 }}
-        >
-          {showForm ? "Ocultar formulario" : "Nuevo cliente"}
-        </Button>
-      )}
-      {showForm && (
-        <>
-          <InputField
-            id="cliente"
-            label="Cliente"
-            value={nombre}
-            onChange={setNombre}
-          />
-          <InputField
-            id="cedula"
-            label="Cédula"
-            value={cedula}
-            onChange={setCedula}
-          />
-          <InputField
-            id="telefono"
-            label="Teléfono"
-            value={telefono}
-            onChange={setTelefono}
-          />
-          <InputField
-            id="direccion"
-            label="Dirección"
-            value={direccion}
-            onChange={setDireccion}
-          />
-        </>
-      )}
-      {showForm && (
-        <Button
-          color="success"
-          variant="contained"
-          onClick={handleAdd}
-          sx={{ mt: 3 }}
-        >
-          Añadir
-        </Button>
-      )}
-    </React.Fragment>
+                <React.Fragment>
+                  <Title>Clientes</Title>
+                  <Table size="small">
+                    <TableHead>
+                      <TableRow>
+                        <TableCell>Nombre</TableCell>
+                        <TableCell>Cédula</TableCell>
+                        <TableCell>Teléfono</TableCell>
+                        <TableCell>Dirección</TableCell>
+                        <TableCell>Operaciones</TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {rows.slice(0, n).map((row) => (
+                        <TableRow key={row.id}>
+                          <TableCell>{row.nombre}</TableCell>
+                          <TableCell>{row.cedula}</TableCell>
+                          <TableCell>{row.telefono}</TableCell>
+                          <TableCell>{row.direccion}</TableCell>
+                          <TableCell>
+                            <DeleteIcon
+                              onClick={() => handleDelete(row.id)}
+                              sx={{ cursor: "pointer" }}
+                            />
+                            <Link
+                              to={`/clientes/${row.id}`}
+                              style={{ textDecoration: "none", color: "white" }}
+                            >
+                              <CreateIcon />
+                            </Link>
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                  <Button
+                    color="primary"
+                    onClick={() => setN(n + 5)}
+                    sx={{ mt: 3 }}
+                  >
+                    Ver más clientes
+                  </Button>
+                  {setShowForm && (
+                    <Button
+                      color="primary"
+                      variant="contained"
+                      onClick={() => setShowForm(!showForm)}
+                      sx={{ mt: 3 }}
+                    >
+                      {showForm ? "Ocultar formulario" : "Nuevo cliente"}
+                    </Button>
+                  )}
+                  {showForm && (
+                    <>
+                      <InputField
+                        id="cliente"
+                        label="Cliente"
+                        value={nombre}
+                        onChange={setNombre}
+                      />
+                      <InputField
+                        id="cedula"
+                        label="Cédula"
+                        value={cedula}
+                        onChange={setCedula}
+                      />
+                      <InputField
+                        id="telefono"
+                        label="Teléfono"
+                        value={telefono}
+                        onChange={setTelefono}
+                      />
+                      <InputField
+                        id="direccion"
+                        label="Dirección"
+                        value={direccion}
+                        onChange={setDireccion}
+                      />
+                    </>
+                  )}
+                  {showForm && (
+                    <Button
+                      color="success"
+                      variant="contained"
+                      onClick={handleAdd}
+                      sx={{ mt: 3 }}
+                    >
+                      Añadir
+                    </Button>
+                  )}
+                </React.Fragment>
               </Paper>
             </Grid>
             <Copyright sx={{ pt: 4 }} />

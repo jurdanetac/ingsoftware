@@ -11,18 +11,18 @@ import Badge from "@mui/material/Badge";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import LogoutIcon from "@mui/icons-material/Logout";
-import {
-  mainListItems,
-} from "./listItems";
+import Button from "@mui/material/Button";
+import { mainListItems } from "./listItems";
 
 import AppBar from "./AppBar";
 import Drawer from "./Drawer";
+import InputField from "./InputField";
 
-import { Navigate } from 'react-router-dom';
-import { useParams } from 'react-router-dom';
+import { Navigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import apiService from "../services/api";
-
 
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme({
@@ -31,7 +31,13 @@ const defaultTheme = createTheme({
 
 export default function Client({ session, logout }) {
   const { id } = useParams();
+  const navigate = useNavigate();
+
   const [cliente, setCliente] = React.useState({});
+  const [nombre, setNombre] = React.useState("");
+  const [cedula, setCedula] = React.useState("");
+  const [telefono, setTelefono] = React.useState("");
+  const [direccion, setDireccion] = React.useState("");
 
   // get client we are going to show
   React.useEffect(() => {
@@ -39,12 +45,30 @@ export default function Client({ session, logout }) {
       const client = clients.find((c) => c.id === Number(id));
       // if client is not found, redirect to home
       if (!client) {
-        <Navigate replace to="/" />
+        <Navigate replace to="/" />;
         return;
       }
       setCliente(client);
+      setNombre(client.nombre);
+      setCedula(client.cedula);
+      setTelefono(client.telefono);
+      setDireccion(client.direccion);
     });
   }, [id]);
+
+  const handleUpdate = () => {
+    apiService
+      .updateClient(id, {
+        nombre,
+        cedula,
+        telefono,
+        direccion,
+      })
+      .then(() => {
+        window.alert("Cliente modificado");
+        navigate(`/clientes`);
+      });
+  };
 
   // sidebar
   const [open, setOpen] = React.useState(false);
@@ -123,6 +147,33 @@ export default function Client({ session, logout }) {
           }}
         >
           <Toolbar />
+          <InputField
+            id="cliente"
+            label="Cliente"
+            value={nombre}
+            onChange={setNombre}
+          />
+          <InputField
+            id="cedula"
+            label="Cédula"
+            value={cedula}
+            onChange={setCedula}
+          />
+          <InputField
+            id="telefono"
+            label="Teléfono"
+            value={telefono}
+            onChange={setTelefono}
+          />
+          <InputField
+            id="direccion"
+            label="Dirección"
+            value={direccion}
+            onChange={setDireccion}
+          />
+          <Button variant="contained" color="success" onClick={handleUpdate}>
+            Modificar
+          </Button>
         </Box>
       </Box>
     </ThemeProvider>
